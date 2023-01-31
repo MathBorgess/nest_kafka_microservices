@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  app:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node-main
+    environment:
+      - DATABASE_URL=mysql://root:admin@mysql:3306/microservices
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - .:/usr/app
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CREATE_TOPICS="hello:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+
+  db:
+    container_name: 'node-mysql'
+    image: mysql
+    restart: unless-stopped
+    hostname: mysql
+    ports: 
+      - '3306:3306'
+    environment: 
+      - MYSQL_ROOT_PASSWORD=admin
+      - TZ=America/Sao_Paulo
+    volumes:
+     - mysql_docker:/var/lib/mysql
+  
+volumes:
+  mysql_docker:
