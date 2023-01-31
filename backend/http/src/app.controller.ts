@@ -11,13 +11,13 @@ export class AppController implements OnModuleInit {
     options: {
       client: {
         brokers: ['kafka:9091'],
-        clientId: 'hello',
+        clientId: 'hello'
       },
       consumer: {
         groupId: 'helloGroup',
-        allowAutoTopicCreation: true,
-      },
-    },
+        allowAutoTopicCreation: true
+      }
+    }
   })
   private client: ClientKafka;
 

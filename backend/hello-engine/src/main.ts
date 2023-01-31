@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
@@ -14,14 +15,14 @@ async function bootstrap() {
       options: {
         client: {
           brokers: ['kafka:9091'],
-          clientId: 'hello',
+          clientId: 'hello'
         },
         consumer: {
           groupId: 'helloGroup',
-          allowAutoTopicCreation: true,
-        },
-      },
-    },
+          allowAutoTopicCreation: true
+        }
+      }
+    }
   );
   await app.listen();
   logger.log('hello-engine on air');
