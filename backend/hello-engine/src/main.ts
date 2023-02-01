@@ -1,4 +1,6 @@
-/* eslint-disable prettier/prettier */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
@@ -14,12 +16,13 @@ async function bootstrap() {
       transport: Transport.KAFKA,
       options: {
         client: {
-          brokers: ['kafka:9091'],
-          clientId: 'hello'
+          brokers: ['localhost:9092'],
+          clientId: 'helloID'
         },
         consumer: {
           groupId: 'helloGroup',
-          allowAutoTopicCreation: true
+          allowAutoTopicCreation: true,
+          maxWaitTimeInMs: 100000
         }
       }
     }

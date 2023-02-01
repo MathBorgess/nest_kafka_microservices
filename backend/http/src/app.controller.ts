@@ -10,12 +10,13 @@ export class AppController implements OnModuleInit {
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: ['kafka:9091'],
-        clientId: 'hello'
+        brokers: ['localhost:9092'],
+        clientId: 'helloID'
       },
       consumer: {
         groupId: 'helloGroup',
-        allowAutoTopicCreation: true
+        allowAutoTopicCreation: true,
+        maxWaitTimeInMs: 100000
       }
     }
   })
